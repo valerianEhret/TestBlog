@@ -2,12 +2,14 @@ import React from 'react';
 import {renderTree} from "../index";
 
 
+
+
 export const store:StoreType = {
     _state:{
         navbarPage:{},
         infoPage: {},
         postsPage:{
-            newPost:"",
+            currentInputValue:"",
             posts: [
                 {id:1, post: "first post"},
                 {id:2, post: "second post"},
@@ -20,14 +22,17 @@ export const store:StoreType = {
     dispatch(action:ActionType) {
 
     },
-    addPost() {
-
-    },
     changePost(value:string) {
-        store.getState().postsPage.newPost = value
+        this.getState().postsPage.currentInputValue = value     // приавниеваем значние newPost значению value (e.currenTarge.value), которое приходит снизу из Posts и обновляем компоненту.
         renderTree()
-    }
+    },
+    addPost() {   // создали новый объект пост вместо post newMessage, значние, которое придет снизу из Posts
 
+        let newPost = {id: 3, post: this.getState().postsPage.currentInputValue};
+        this.getState().postsPage.posts.push(newPost)
+        this.getState().postsPage.currentInputValue = ""
+        renderTree()
+    },
 }
 
 
@@ -36,7 +41,7 @@ export type StoreType = {
     _state: StateType
     getState: () => StateType
     dispatch:(action:ActionType) => void
-    addPost:Function
+    addPost:() => void
     changePost:(value:string) => void
 }
 
@@ -53,7 +58,7 @@ type infoPagType = {
 }
 
 export type PostsPageType = {
-    newPost:string
+    currentInputValue:string
     posts: Array<PostsType>
 }
 
