@@ -1,5 +1,6 @@
 import React from 'react';
 import {renderTree} from "../index";
+import {ActionsTypes, reducer} from "./reducer";
 
 
 
@@ -18,31 +19,31 @@ export const store:StoreType = {
     },
     getState() {
         return this._state
-    },
-    dispatch(action:ActionType) {
-
-    },
-    changePost(value:string) {
-        this.getState().postsPage.currentInputValue = value     // приавниеваем значние newPost значению value (e.currenTarge.value), которое приходит снизу из Posts и обновляем компоненту.
+    }, // dispatch получает action и вызывает reducer c action , а reducer возвращает новый state
+    dispatch(action: ActionsTypes) {
+        this.getState().postsPage =   reducer(this.getState().postsPage, action)
         renderTree()
     },
-    addPost() {   // создали новый объект пост вместо post newMessage, значние, которое придет снизу из Posts
-
-        let newPost = {id: 3, post: this.getState().postsPage.currentInputValue};
-        this.getState().postsPage.posts.push(newPost)
-        this.getState().postsPage.currentInputValue = ""
-        renderTree()
-    },
+    // changePost(value:string) {
+    //     this.getState().postsPage.currentInputValue = value     // приавниеваем значние newPost значению value (e.currenTarge.value), которое приходит снизу из Posts и обновляем компоненту.
+    //     renderTree()
+    // },
+    // addPost() {   // создали новый объект пост вместо post newMessage, значние, которое придет снизу из Posts
+    //
+    //     let newPost = {id: 3, post: this.getState().postsPage.currentInputValue};
+    //     this.getState().postsPage.posts.push(newPost)
+    //     this.getState().postsPage.currentInputValue = ""
+    //     renderTree()
+    // },
 }
-
 
 
 export type StoreType = {
     _state: StateType
     getState: () => StateType
-    dispatch:(action:ActionType) => void
-    addPost:() => void
-    changePost:(value:string) => void
+    dispatch:Function
+    // addPost:() => void
+    // changePost:(value:string) => void
 }
 
 export type StateType = {
@@ -65,9 +66,4 @@ export type PostsPageType = {
 type PostsType = {
     id:number
     post: string
-}
-
-type ActionType = {
-    type: string
-    newPost:string
 }
