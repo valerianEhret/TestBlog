@@ -41,7 +41,7 @@ export const store:StoreType = {
 export type StoreType = {
     _state: StateType
     getState: () => StateType
-    dispatch:Function
+    dispatch:(action:ActionsTypes)=>void
     // addPost:() => void
     // changePost:(value:string) => void
 }

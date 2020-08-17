@@ -1,10 +1,10 @@
 import React, {ChangeEvent} from 'react';
 import {PostsPageType} from "../../redux/store";
-import {addPostAC, changePostAC} from "../../redux/reducer";
+import {ActionsTypes, addPostAC, changePostAC} from "../../redux/reducer";
 
 type PostsPropsType = {
     postsPage: PostsPageType
-    dispatch:Function
+    dispatch:(action:ActionsTypes)=>void
     // changePost:(value:string) => void
     // addPost:() =>void
 }
